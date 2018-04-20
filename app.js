@@ -53,12 +53,10 @@ const getAllFiles = dir => {
     console.log('No directory found.');
     return [];
   }
-  const notNodeModules = !dir.includes('node_modules');
-
   return dirSync.reduce((files, file) => {
     const name = path.join(dir, file);
     const isDir = fs.statSync(name).isDirectory();
-    return isDir && !notNodeModules
+    return isDir
       ? [...files, ...getAllFiles(name)]
       : [...files, name];
   }, []);
