@@ -14,34 +14,50 @@ const header = `/***************************************************************
   *******************************************************************************/
 
   `;
+const readFile = filePath =>
+  new Promise((resolve, reject) => {
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) reject(err);
+      resolve(data);
+    });
+  });
 
 const prependLicense = filePath =>
   new Promise((resolve, reject) => {
-    prependFile(filePath, _, err => {
+    prependFile(filePath, header, err => {
       if (err) reject(err);
       console.log(`Prepended license to ${filePath}`);
       resolve();
     });
   });
-/**
- * Find all files inside a dir, recursively.
- * @function getAllFiles
- * @param  {string} dir Dir path string.
- * @return {string[]} Array with all file names that are inside the directory.
- */
+
+
+// don't double append
+const conditionallyReadAndPrependFile = path => {
+  readFile(path).then(output => {
+    if (!output.includes('Licensed Materials - Property of IBM')) {
+      prependLicense(path);
+    }
+  });
+};
+
+// recursively get array of file paths from a directory path.
 const getAllFiles = dir => {
   let dirSync;
   try {
     dirSync = fs.readdirSync(dir);
   } catch (err) {
     console.log('No directory found.');
+    return [];
   }
   return dirSync.reduce((files, file) => {
     const name = path.join(dir, file);
-    const isDirectory = fs.statSync(name).isDirectory();
-    return isDirectory ? [...files, ...getAllFiles(name)] : [...files, name];
+    const isDir = fs.statSync(name).isDirectory();
+    return isDir ? [...files, ...getAllFiles(name)] : [...files, name];
   }, []);
 };
 
 // map over all files and prepend the license.
-getAllFiles(cliArg).map(prependLicense);
+getAllFiles(cliArg)
+  .filter(eachPath => eachPath.includes('.js'))
+  .map(conditionallyReadAndPrependFile);
