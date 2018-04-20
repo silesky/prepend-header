@@ -11,9 +11,13 @@ const header = `/***************************************************************
   * Note to U.S. Government Users Restricted Rights:
   * Use, duplication or disclosure restricted by GSA ADP Schedule
   * Contract with IBM Corp.
-  *******************************************************************************/
+  *******************************************************************************/\n\n`;
 
-  `;
+if (!cliArg) {
+  console.log('--> Missing argument. Please include a valid directory path such as src-web or .');
+  return;
+}
+
 const readFile = filePath =>
   new Promise((resolve, reject) => {
     fs.readFile(filePath, 'utf8', (err, data) => {
@@ -30,7 +34,6 @@ const prependLicense = filePath =>
       resolve();
     });
   });
-
 
 // don't double append
 const conditionallyReadAndPrependFile = path => {
@@ -50,14 +53,18 @@ const getAllFiles = dir => {
     console.log('No directory found.');
     return [];
   }
+  const notNodeModules = !dir.includes('node_modules');
+
   return dirSync.reduce((files, file) => {
     const name = path.join(dir, file);
     const isDir = fs.statSync(name).isDirectory();
-    return isDir ? [...files, ...getAllFiles(name)] : [...files, name];
+    return isDir && !notNodeModules
+      ? [...files, ...getAllFiles(name)]
+      : [...files, name];
   }, []);
 };
 
 // map over all files and prepend the license.
 getAllFiles(cliArg)
-  .filter(eachPath => eachPath.includes('.js'))
+  .filter(eachPath => /jsx?\b/.test(eachPath))
   .map(conditionallyReadAndPrependFile);
