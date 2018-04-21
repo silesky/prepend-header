@@ -1,9 +1,18 @@
-// check if has 'ibm' copyright string
+/*******************************************************************************
+  * Licensed Materials - Property of IBM
+  * (c) Copyright IBM Corporation 2018. All Rights Reserved.
+  *
+  * Note to U.S. Government Users Restricted Rights:
+  * Use, duplication or disclosure restricted by GSA ADP Schedule
+  * Contract with IBM Corp.
+  *******************************************************************************/
+
 const path = require('path');
 const prependFile = require('prepend-file');
 const glob = require('glob-fs')({ gitignore: false });
-const [_, __, cliArg] = process.argv;
 const fs = require('fs');
+const args = require('minimist')(process.argv.slice(2))
+
 const header = `/*******************************************************************************
   * Licensed Materials - Property of IBM
   * (c) Copyright IBM Corporation 2018. All Rights Reserved.
@@ -13,12 +22,6 @@ const header = `/***************************************************************
   * Contract with IBM Corp.
   *******************************************************************************/\n\n`;
 
-if (!cliArg) {
-  console.log(
-    '--> Missing argument. Please include a valid directory path such as src-web or .',
-  );
-  return;
-}
 
 const readFilePromise = filePath =>
   new Promise((resolve, reject) => {
@@ -34,8 +37,8 @@ const prependLicense = filePath =>
       if (err) reject(err);
       console.log(`Prepended license to ${filePath}`);
       resolve();
-  });
     });
+  });
 
 // don't double append
 const conditionallyReadAndPrependFile = path => {
@@ -52,11 +55,19 @@ const getFilesFromGlob = globPattern => {
     const files = glob.readdirSync(globPattern).filter(isFile)
     return files;
   } catch (err) {
-    console.log(err, 'No directory found.');
+    console.log('(Not a glob, maybe quotes were forgotten? Treating as single file.)');
+    conditionallyReadAndPrependFile(globPattern)
     return [];
   }
 };
 
-// map over all files and prepend the license.
-const allFiles = getFilesFromGlob(cliArg);
-allFiles.map(conditionallyReadAndPrependFile);
+const { _: [ userGlob ] } = args;
+if (!userGlob) {
+  console.log(
+    '--> Missing argument. Please include a valid directory path such as src-web or .',
+  );
+} else {
+  // map over all files and prepend the license.
+  getFilesFromGlob(userGlob)
+    .map(conditionallyReadAndPrependFile);
+}
