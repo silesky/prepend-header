@@ -1,9 +1,9 @@
 // check if has 'ibm' copyright string
-const fs = require('fs');
 const path = require('path');
 const prependFile = require('prepend-file');
+const glob = require('glob-fs')({ gitignore: false });
 const [_, __, cliArg] = process.argv;
-
+const fs = require('fs');
 const header = `/*******************************************************************************
   * Licensed Materials - Property of IBM
   * (c) Copyright IBM Corporation 2018. All Rights Reserved.
@@ -14,11 +14,13 @@ const header = `/***************************************************************
   *******************************************************************************/\n\n`;
 
 if (!cliArg) {
-  console.log('--> Missing argument. Please include a valid directory path such as src-web or .');
+  console.log(
+    '--> Missing argument. Please include a valid directory path such as src-web or .',
+  );
   return;
 }
 
-const readFile = filePath =>
+const readFilePromise = filePath =>
   new Promise((resolve, reject) => {
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) reject(err);
@@ -32,37 +34,29 @@ const prependLicense = filePath =>
       if (err) reject(err);
       console.log(`Prepended license to ${filePath}`);
       resolve();
-    });
   });
+    });
 
 // don't double append
 const conditionallyReadAndPrependFile = path => {
-  readFile(path).then(output => {
+  readFilePromise(path).then(output => {
     if (!output.includes('Licensed Materials - Property of IBM')) {
       prependLicense(path);
     }
   });
 };
 
-// recursively get array of file paths from a directory path.
-const getAllFiles = dir => {
-  let dirSync;
+const getFilesFromGlob = globPattern => {
+  const isFile = (path) => !fs.statSync(path).isDirectory();
   try {
-    dirSync = fs.readdirSync(dir);
+    const files = glob.readdirSync(globPattern).filter(isFile)
+    return files;
   } catch (err) {
-    console.log('No directory found.');
+    console.log(err, 'No directory found.');
     return [];
   }
-  return dirSync.reduce((files, file) => {
-    const name = path.join(dir, file);
-    const isDir = fs.statSync(name).isDirectory();
-    return isDir
-      ? [...files, ...getAllFiles(name)]
-      : [...files, name];
-  }, []);
 };
 
 // map over all files and prepend the license.
-getAllFiles(cliArg)
-  .filter(eachPath => /jsx?\b/.test(eachPath))
-  .map(conditionallyReadAndPrependFile);
+const allFiles = getFilesFromGlob(cliArg);
+allFiles.map(conditionallyReadAndPrependFile);
