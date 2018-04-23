@@ -14,7 +14,7 @@ run_test() {
   file_path=$1
   setup
   echo [FILES from $file_path]
-  node app.js $file_path $header_path
+  node index.js $file_path $header_path
   echo "------"
 }
 
