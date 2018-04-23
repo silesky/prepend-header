@@ -19,8 +19,8 @@ const txt = `/******************************************************************
 module.exports = txt;
 ```
 
-2. Run a CLI command.
-- format is: `node ./node_modules/prepend-header/index.js <GLOB> <HEADERPATH>
+2. Run in command line:
+- `node ./node_modules/prepend-header.js <GLOB> <HEADERPATH>`
 
 ###  Example(s):
   - `node ./node_modules/prepend-header/index.js src-web/**/*.js ./headers/header.js  (all js files matching glob)`.
