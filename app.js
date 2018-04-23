@@ -10,12 +10,13 @@ const {
   readFilePromise,
 } = require('./utils');
 
-const isFile = path => {
-  return fs.existsSync(path) ? !fs.statSync(path).isDirectory() : false;
-};
 
 const flatArgs = flatten(Object.values(args));
 
+if (!flatArgs.length) {
+  console.log('usage: node prepend-header filepath [headerpath]');
+  return;
+}
 const filesOrGlobs = flatArgs.slice(0, flatArgs.length - 1)
 const headerPath = flatArgs[flatArgs.length - 1];
 
@@ -23,7 +24,7 @@ let headerTxt = '';
 if (moduleIsAvailable(headerPath)) {
   headerTxt = require(headerPath);
   // accept optional header.js
-} else if (moduleIsAvailable(`${appPath}/header.js`)) {
+} else if (moduleIsAvailable(`${appPath}/header`)) {
   headerTxt = require('./header');
 } else {
   console.log(
@@ -56,6 +57,11 @@ const conditionallyReadAndPrependHeaderToFile = filePath => {
 // all this complex logic to basically check if we user is passing a glob (e.g. [src-web/**/*.js])
 // or an array of files
 // (natural bash globbing e.g  [ 'src-web/thing/thing2/after.scss', 'src-web/thing/thing2/after1.scss'
+
+
+const isFile = path => {
+  return fs.existsSync(path) ? !fs.statSync(path).isDirectory() : false;
+};
 
 const getFilesFromGlob = globPattern => {
   try {
