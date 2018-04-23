@@ -1,11 +1,10 @@
 {
-  "name": "ibm-prepend-license",
+  "name": "prepend-header",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "sh ./test.sh",
-    "prepend-header": "node ./node_modules/prepend-header/index.js"
+    "test": "sh ./test.sh"
   },
   "author": "",
   "license": "ISC",
