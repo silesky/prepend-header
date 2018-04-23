@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "sh ./test.sh",
     "ibm-prepend-license": "node ./node_modules/ibm-prepend-license/app.js"
   },
   "author": "",

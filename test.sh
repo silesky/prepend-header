@@ -16,10 +16,6 @@ run_test() {
   echo "------"
 }
 
-run_test src-web/**/*
-echo 'quoted'
-run_test "src-web/**/*"
-
 run_test src-web/**/*.scss
 echo 'quoted'
 run_test "src-web/**/*.scss"
@@ -29,3 +25,7 @@ run_test src-web/**/*.js
 run_test src-web/thing/thing2/after1.scss
 echo 'quoted'
 run_test 'src-web/thing/thing2/after1.scss'
+
+run_test src-web/**/*
+echo 'quoted'
+run_test "src-web/**/*"

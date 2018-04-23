@@ -12,9 +12,11 @@ const glob = require('glob-fs')({ gitignore: false });
 const fs = require('fs');
 const args = require('minimist')(process.argv.slice(2));
 const isGlob = require('is-glob');
+
+const year = new Date().getFullYear()
 const header = `/*******************************************************************************
   * Licensed Materials - Property of IBM
-  * (c) Copyright IBM Corporation 2018. All Rights Reserved.
+  * (c) Copyright IBM Corporation ${year}. All Rights Reserved.
   *
   * Note to U.S. Government Users Restricted Rights:
   * Use, duplication or disclosure restricted by GSA ADP Schedule
