@@ -23,8 +23,8 @@ module.exports = txt;
 - format is: `node ./node_modules/prepend-header/app.js <HEADERPATH> <GLOB>`
 
 ###  Example(s):
-  - `node ./node_modules/prepend-header/app.js header.js src-web/**/*.js ` (all js files matching glob).
-  - `node ./node_modules/prepend-header/app.js header.js src-web/after.js` (single file)
+  - `node ./node_modules/prepend-header/app.js './headers/header.js' src-web/**/*.js ` (all js files matching glob).
+  - `node ./node_modules/prepend-header/app.js './headers/header.js' src-web/after.js` (single file)
 
 Successful Output should look like:
 ```
