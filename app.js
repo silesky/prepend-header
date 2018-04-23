@@ -40,10 +40,10 @@ const prependLicense = filePath =>
     });
   });
 
-// don't double append
 const conditionallyReadAndPrependFile = path => {
   readFilePromise(path).then(output => {
-    if (!output.includes('Licensed Materials - Property of IBM')) {
+    // don't accidentally double-append.
+    if (!output.includes(header)) {
       prependLicense(path);
     }
   });
