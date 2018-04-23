@@ -13,7 +13,7 @@
     "jest": "^22.4.3"
   },
   "bin": {
-    "prepend-header": "./index"
+    "prepend-header": "./index.js"
   },
   "dependencies": {
     "glob-fs": "^0.1.7",
