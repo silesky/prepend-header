@@ -1,6 +1,6 @@
 {
   "name": "prepend-header",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "jest": "^22.4.3"
   },
   "bin": {
-    "prepend-file": "./index.js"
+    "prepend-header": "./index"
   },
   "dependencies": {
     "glob-fs": "^0.1.7",
