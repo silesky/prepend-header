@@ -1,38 +1,35 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 2018. All Rights Reserved.
- *
- * Note to U.S. Government Users Restricted Rights:
- * Use, duplication or disclosure restricted by GSA ADP Schedule
- * Contract with IBM Corp.
- *******************************************************************************/
-
 const prependFile = require('prepend-file');
 const glob = require('glob-fs')({ gitignore: false });
 const fs = require('fs');
 const args = require('minimist')(process.argv.slice(2));
 const isGlob = require('is-glob');
+const appPath = require('path').dirname(require.main.filename);
+const {
+  moduleIsAvailable,
+  flatten,
+  readFilePromise,
+} = require('./utils');
 
-const flatten = arr => [].concat(...arr);
-const [headerPath, ...filesOrGlobs] = flatten(Object.values(args));
+const isFile = path => {
+  return fs.existsSync(path) ? !fs.statSync(path).isDirectory() : false;
+};
+
+const flatArgs = flatten(Object.values(args));
+
+const filesOrGlobs = flatArgs.slice(0, flatArgs.length - 1)
+const headerPath = flatArgs[flatArgs.length - 1];
 
 let headerTxt = '';
-try {
+if (moduleIsAvailable(headerPath)) {
   headerTxt = require(headerPath);
-} catch (err) {
+  // accept optional header.js
+} else if (moduleIsAvailable(`${appPath}/header.js`)) {
+  headerTxt = require('./header');
+} else {
   console.log(
-    `Unable to prepend, because no valid header.js found. Header argument passed: ${headerPath}`,
-  );
+    `Unable to prepend, because no valid header.js in app root or passed as path. Argument passed: ${headerPath}`);
   return null;
 }
-
-const readFilePromise = filePath =>
-  new Promise((resolve, reject) => {
-    fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) reject(err);
-      resolve(data);
-    });
-  });
 
 const prependHeader = filePath =>
   new Promise((resolve, reject) => {
@@ -56,14 +53,9 @@ const conditionallyReadAndPrependHeaderToFile = filePath => {
   });
 };
 
-const isFile = path => {
-  return fs.existsSync(path) ? !fs.statSync(path).isDirectory() : false;
-};
-
 // all this complex logic to basically check if we user is passing a glob (e.g. [src-web/**/*.js])
 // or an array of files
 // (natural bash globbing e.g  [ 'src-web/thing/thing2/after.scss', 'src-web/thing/thing2/after1.scss'
-// so essentially, whether or not the thing has quotes should not matter.
 
 const getFilesFromGlob = globPattern => {
   try {
@@ -74,13 +66,13 @@ const getFilesFromGlob = globPattern => {
   }
 };
 
+// so essentially, whether or not the thing has quotes should not matter.
 const fileList = filesOrGlobs.filter(isFile);
 const globList = filesOrGlobs.filter(isGlob);
 
 if (!filesOrGlobs.length) {
   console.log(
-    '--> Missing argument. Please include a valid file or directory path such as src-web or .',
-  );
+    '--> Missing files argument. Please include a valid file or directory path such as src-web or .');
 } else {
   // map over all files and prepend the license.
   if (globList.length) {

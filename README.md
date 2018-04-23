@@ -20,11 +20,11 @@ module.exports = txt;
 ```
 
 2. Run a CLI command.
-- format is: `node ./node_modules/prepend-header/app.js <HEADERPATH> <GLOB>`
+- format is: `node ./node_modules/prepend-header/app.js <GLOB> <HEADERPATH>
 
 ###  Example(s):
-  - `node ./node_modules/prepend-header/app.js './headers/header.js' src-web/**/*.js ` (all js files matching glob).
-  - `node ./node_modules/prepend-header/app.js './headers/header.js' src-web/after.js` (single file)
+  - `node ./node_modules/prepend-header/app.js src-web/**/*.js ./headers/header.js  (all js files matching glob).
+  - `node ./node_modules/prepend-header/app.js src-web/after.js ./headers/header.js  (single file)
 
 Successful Output should look like:
 ```
