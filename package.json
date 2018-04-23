@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "sh ./test.sh",
-    "ibm-prepend-license": "node ./node_modules/ibm-prepend-license/app.js"
+    "prepend-header": "node ./node_modules/prepend-header/app.js"
   },
   "author": "",
   "license": "ISC",
