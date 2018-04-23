@@ -4,12 +4,7 @@ const fs = require('fs');
 const args = require('minimist')(process.argv.slice(2));
 const isGlob = require('is-glob');
 const appPath = require('path').dirname(require.main.filename);
-const {
-  moduleIsAvailable,
-  flatten,
-  readFilePromise,
-} = require('./utils');
-
+const { moduleIsAvailable, flatten, readFilePromise } = require('./utils');
 
 const flatArgs = flatten(Object.values(args));
 
@@ -17,15 +12,15 @@ if (!flatArgs.length) {
   console.log('usage: node prepend-header filepath [headerpath]');
   return;
 }
-const filesOrGlobs = flatArgs.slice(0, flatArgs.length - 1)
+const filesOrGlobs = flatArgs.slice(0, flatArgs.length - 1);
 const headerPath = flatArgs[flatArgs.length - 1];
 
-let headerTxt = '';
+let header = {};
 if (moduleIsAvailable(headerPath)) {
-  headerTxt = require(headerPath);
+  header = require(headerPath);
   // accept optional header.js
 } else if (moduleIsAvailable(`${appPath}/header`)) {
-  headerTxt = require('./header');
+  header = require(`${appPath}/header`);
 } else {
   console.log(
     `Unable to prepend, because no valid header.js in app root or passed as path. Argument passed: ${headerPath}`);
@@ -35,7 +30,7 @@ if (moduleIsAvailable(headerPath)) {
 const prependHeader = filePath =>
   new Promise((resolve, reject) => {
     // grab headerTxt from global
-    prependFile(filePath, headerTxt, err => {
+    prependFile(filePath, header.text, err => {
       if (err) {
         console.log('Could not prepend header.');
         reject(err);
@@ -48,8 +43,10 @@ const prependHeader = filePath =>
 const conditionallyReadAndPrependHeaderToFile = filePath => {
   readFilePromise(filePath).then(output => {
     // don't accidentally double-append.
-    if (!output.includes(headerTxt)) {
+    if (!output.includes(header.match)) {
       prependHeader(filePath);
+    } else {
+      console.log(`(Header already exists in ${filePath}.)`)
     }
   });
 };
@@ -57,7 +54,6 @@ const conditionallyReadAndPrependHeaderToFile = filePath => {
 // all this complex logic to basically check if we user is passing a glob (e.g. [src-web/**/*.js])
 // or an array of files
 // (natural bash globbing e.g  [ 'src-web/thing/thing2/after.scss', 'src-web/thing/thing2/after1.scss'
-
 
 const isFile = path => {
   return fs.existsSync(path) ? !fs.statSync(path).isDirectory() : false;
@@ -78,7 +74,7 @@ const globList = filesOrGlobs.filter(isGlob);
 
 if (!filesOrGlobs.length) {
   console.log(
-    '--> Missing files argument. Please include a valid file or directory path such as src-web or .');
+    '--> Missing files argument. Please include a valid file or directory path such as src-web.');
 } else {
   // map over all files and prepend the license.
   if (globList.length) {

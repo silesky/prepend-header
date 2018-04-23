@@ -10,7 +10,7 @@ setup() {
 
 set -f # disable wildcard expansion
 run_test() {
-  header_path='./headers/header.js'
+  header_path='header.js'
   file_path=$1
   setup
   echo [FILES from $file_path]

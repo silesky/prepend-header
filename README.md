@@ -7,7 +7,7 @@ Works recursively:
 1. create a `header.js` that looks something like:
 ```js
 const year = new Date().getFullYear();
-const txt = `/*******************************************************************************
+const text = `/*******************************************************************************
   * Licensed Materials - Property of IBM
   * (c) Copyright IBM Corporation ${year}. All Rights Reserved.
   *
@@ -15,8 +15,12 @@ const txt = `/******************************************************************
   * Use, duplication or disclosure restricted by GSA ADP Schedule
   * Contract with IBM Corp.
   *******************************************************************************/\n\n`;
+const match = 'Copyright IBM Corporation' // skip the file where this match is true
+module.exports = {
+  text,
+  match,
+};
 
-module.exports = txt;
 ```
 
 2. Run in command line:
