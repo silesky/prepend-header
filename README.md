@@ -4,7 +4,8 @@ Works recursively:
 
 ## Set-up:
 
-1. create a `header.js` that looks something like:
+1. Install locally: `npm install prepend-header --save-dev`
+2. create a `header.js` that looks something like:
 ```js
 const year = new Date().getFullYear();
 const text = `/*******************************************************************************
@@ -22,13 +23,11 @@ module.exports = {
 };
 
 ```
-
-2. Run in command line:
-- `node ./node_modules/prepend-header.js <GLOB> <HEADERPATH>`
+3. Run in command line: `npx <GLOB> <HEADERPATH>`
 
 ###  Example(s):
-  - `node ./node_modules/prepend-header/index.js src-web/**/*.js ./headers/header.js  (all js files matching glob)`.
-  - `node ./node_modules/prepend-header/index.js src-web/after.js ./headers/header.js  (single file)`
+  - `prepend-header src-web/**/*.js ./headers/header.js  (all js files matching glob)`.
+  - `prepend-header src-web/after.js ./headers/header.js  (single file)`
 
 Successful Output should look like:
 ```
