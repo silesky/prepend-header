@@ -37,7 +37,7 @@ const prependHeader = filePath =>
         console.log('Could not prepend header.');
         reject(err);
       }
-      console.log(`Prepended license to ${filePath}`);
+      console.log(`Prepended to ${filePath}`);
       resolve();
     });
   });
