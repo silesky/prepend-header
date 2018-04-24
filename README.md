@@ -7,14 +7,17 @@
 ```js
 const year = new Date().getFullYear();
 const text = `/*******************************************************************************
-  * Licensed Materials - Property of IBM
-  * (c) Copyright IBM Corporation ${year}. All Rights Reserved.
-  *
-  * Note to U.S. Government Users Restricted Rights:
-  * Use, duplication or disclosure restricted by GSA ADP Schedule
-  * Contract with IBM Corp.
-  *******************************************************************************/\n\n`;
-const match = 'Copyright IBM Corporation' // skip the file where this match is true
+ * Licensed Materials - Property of IBM
+ * (c) Copyright IBM Corporation ${year}. All Rights Reserved.
+ *
+ * Note to U.S. Government Users Restricted Rights:
+ * Use, duplication or disclosure restricted by GSA ADP Schedule
+ * Contract with IBM Corp.
+ *******************************************************************************/
+
+`;
+
+const match = 'Reserved';
 module.exports = {
   text,
   match,
