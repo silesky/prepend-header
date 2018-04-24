@@ -17,10 +17,10 @@ const text = `/*****************************************************************
 
 `;
 
-const match = 'Reserved';
+const match = 'Reserved'; // avoid double-prepends. if this word exists in a file, that file gets skipped.
 module.exports = {
   text,
-  match,
+  match, 
 };
 
 ```
