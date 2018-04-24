@@ -4,7 +4,7 @@ Works recursively
 
 ## Set-up:
 
-1. Install locally: `npm instal prepend-header --save-dev`
+1. Install locally: `npm install prepend-header --save-dev`
 2. create a `header.js` that looks something like:
 ```js
 const year = new Date().getFullYear();
