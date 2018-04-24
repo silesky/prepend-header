@@ -27,8 +27,8 @@ module.exports = {
 3. Run in command line: `npx <GLOB> <HEADERPATH>`
 
 ###  Example(s):
-  - `prepend-header src-web/**/*.js ./headers/header.js  (all js files matching glob)`.
-  - `prepend-header src-web/after.js ./headers/header.js  (single file)`
+  - `prepend-header src-web/**/*.js '../../header.js'  (all js files matching glob)`.
+  - `prepend-header src-web/after.js '../../header.js'  (single file)`
 
 Successful Output should look like:
 ```
