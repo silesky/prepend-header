@@ -1,6 +1,4 @@
-# Prepend text to a file / group of files
-
-Works recursively
+# Prepend custom text to file(s) based on specified globbing pattern.
 
 ## Set-up:
 
@@ -32,7 +30,7 @@ module.exports = {
 Successful Output should look like:
 ```
 [FILES from src-web/**/*]
-Prepended license to src-web/after1.js
-Prepended license to src-web/foo/after2.js
-Prepended license to src-web/foo/after3.js
+Prepended to src-web/after1.js
+Prepended to src-web/foo/after2.js
+Prepended to src-web/foo/after3.js
 ```
