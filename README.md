@@ -7,14 +7,17 @@
 ```js
 const year = new Date().getFullYear();
 const text = `/*******************************************************************************
-  * Licensed Materials - Property of IBM
-  * (c) Copyright IBM Corporation ${year}. All Rights Reserved.
-  *
-  * Note to U.S. Government Users Restricted Rights:
-  * Use, duplication or disclosure restricted by GSA ADP Schedule
-  * Contract with IBM Corp.
-  *******************************************************************************/\n\n`;
-const match = 'Copyright IBM Corporation' // skip the file where this match is true
+ * Licensed Materials - Property of IBM
+ * (c) Copyright IBM Corporation ${year}. All Rights Reserved.
+ *
+ * Note to U.S. Government Users Restricted Rights:
+ * Use, duplication or disclosure restricted by GSA ADP Schedule
+ * Contract with IBM Corp.
+ *******************************************************************************/
+
+`;
+
+const match = 'Reserved'; // avoid double-prepends. if this word exists in a file, that file gets skipped.
 module.exports = {
   text,
   match,
@@ -24,13 +27,13 @@ module.exports = {
 3. Run in command line: `npx <GLOB> <HEADERPATH>`
 
 ###  Example(s):
-  - `prepend-header src-web/**/*.js ./headers/header.js  (all js files matching glob)`.
-  - `prepend-header src-web/after.js ./headers/header.js  (single file)`
+  - `prepend-header src-web/**/*.js '../../header.js'  (all js files matching glob)`.
+  - `prepend-header src-web/after.js '../../header.js'  (single file)`
 
 Successful Output should look like:
 ```
 [FILES from src-web/**/*]
-Prepended license to src-web/after1.js
-Prepended license to src-web/foo/after2.js
-Prepended license to src-web/foo/after3.js
+Prepended to src-web/after1.js
+Prepended to src-web/foo/after2.js
+Prepended to src-web/foo/after3.js
 ```
