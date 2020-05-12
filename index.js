@@ -3,6 +3,7 @@
 const prependFile = require('prepend-file');
 const glob = require('glob-fs')({ gitignore: false });
 const fs = require('fs');
+const path = require('path');
 const args = require('minimist')(process.argv.slice(2));
 const isGlob = require('is-glob');
 const appPath = require('path').dirname(require.main.filename);
@@ -21,6 +22,8 @@ let header = {};
 if (moduleIsAvailable(headerPath)) {
   header = require(headerPath);
   // accept optional header.js
+} else if (moduleIsAvailable(path.join(appPath, headerPath))) {
+  header = require(path.join(appPath, headerPath));
 } else if (moduleIsAvailable(`${appPath}/header`)) {
   header = require(`${appPath}/header`);
 } else {
