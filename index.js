@@ -8,11 +8,15 @@ const args = require('minimist')(process.argv.slice(2));
 const isGlob = require('is-glob');
 const appPath = require('path').dirname(require.main.filename);
 const { moduleIsAvailable, flatten, readFilePromise } = require('./utils');
-
 const flatArgs = flatten(Object.values(args));
 
 if (!flatArgs.length) {
-  console.log('usage: node prepend-header filepath [headerpath]');
+  console.log(
+    `
+    version: ${process.env.npm_package_version}
+    usage: prepend-header [filepath] [headerpath]
+    example: prepend-header header.config.js src/**/*.scss
+  `)
   return;
 }
 const filesOrGlobs = flatArgs.slice(0, flatArgs.length - 1);
@@ -28,7 +32,7 @@ if (moduleIsAvailable(headerPath)) {
   header = require(`${appPath}/header`);
 } else {
   console.log(
-    `Unable to prepend, because no valid header.js in app root or passed as path. Argument passed: ${headerPath}`);
+    `Unable to prepend, because no valid header javascript file in app root or passed as path. Argument passed: ${headerPath}`);
   return null;
 }
 

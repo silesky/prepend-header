@@ -1,9 +1,21 @@
 # Prepend text to a file / group of files
+###  Example(s):
+  - `prepend-header src-web/foo.js 'header.config.js'  (single file)`
+  - `prepend-header src-web/**/*.js 'header.config.js'  (all files matching glob)`.
 
-## Set-up:
+Successful Output should look like:
+```
+[FILES from src-web/**/*]
+Prepended to src-web/after1.js
+Prepended to src-web/foo/after2.js
+Prepended to src-web/foo/after3.js
+```
 
-1. Install locally: `npm i prepend-header --save-dev`
-2. create a `header.js` that looks something like:
+## Local Project:
+
+-  `npm i prepend-header --save-dev`
+
+2. create a `header.config.js` in your root that looks something like:
 ```js
 const year = new Date().getFullYear();
 const text = `/*******************************************************************************
@@ -14,7 +26,6 @@ const text = `/*****************************************************************
  * Use, duplication or disclosure restricted by GSA ADP Schedule
  * Contract with IBM Corp.
  *******************************************************************************/
-
 `;
 
 const match = 'Reserved'; // avoid double-prepends. if this word exists in a file, that file gets skipped.
@@ -22,18 +33,16 @@ module.exports = {
   text,
   match,
 };
-
 ```
-3. Run in command line: `npx <GLOB> <HEADERPATH>`
-
-###  Example(s):
-  - `prepend-header src-web/**/*.js '../../header.js'  (all js files matching glob)`.
-  - `prepend-header src-web/after.js '../../header.js'  (single file)`
-
-Successful Output should look like:
+3. In package.json do:
+```json
+"scripts" {
+  "prepend-header: "prepend-header src/**/*.js header.config.js",
+}
 ```
-[FILES from src-web/**/*]
-Prepended to src-web/after1.js
-Prepended to src-web/foo/after2.js
-Prepended to src-web/foo/after3.js
-```
+4. `npm run prepend-header`
+----
+## Run once with NPX
+1. create a header.config.js in your current working directory see above for format)
+2. `npx prepend-header src/**/*.js header.config.js`
+
