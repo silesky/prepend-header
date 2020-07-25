@@ -2,15 +2,15 @@
 setup() {
   rm -rf src-web
   mkdir -p src-web/thing/thing2
-  echo 'xxx' > 'src-web/thing/after.js'
-  echo 'xxx' > 'src-web/after.js'
-  echo 'xxx' > 'src-web/thing/thing2/after.scss'
-  echo 'xxx' > 'src-web/thing/thing2/after1.scss'
+  echo 'xxx' >'src-web/thing/after.js'
+  echo 'xxx' >'src-web/after.js'
+  echo 'xxx' >'src-web/thing/thing2/after.scss'
+  echo 'xxx' >'src-web/thing/thing2/after1.scss'
 }
 
 set -f # disable wildcard expansion
 run_test() {
-  header_path='test/header.js'
+  header_path='header.config.js'
   file_path=$1
   #setup
   echo [FILES from $file_path]
@@ -25,7 +25,6 @@ echo 'quoted'
 run_test "src-web/**/*.scss"
 
 run_test src-web/**/*.js
-
 
 run_test src-web/**/*
 echo 'quoted'

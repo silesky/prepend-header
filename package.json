@@ -4,6 +4,7 @@
   "description": "Use a JS module to define a header to prepend to one or more files.",
   "main": "index.js",
   "scripts": {
+    "debug": "node --inspect index.js",
     "test": "sh ./test.sh"
   },
   "author": "@silesky",
