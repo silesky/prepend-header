@@ -14,8 +14,8 @@ if (!flatArgs.length) {
   console.log(
     `
     version: ${process.env.npm_package_version}
-    usage: prepend-header [filepath] [headerpath]
-    example: prepend-header header.config.js src/**/*.scss
+    usage: prepend-header [filepath/globpath] [headerpath]
+    example: prepend-header src/**/*.scss header.config.js
   `)
   return;
 }
