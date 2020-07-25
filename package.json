@@ -1,6 +1,6 @@
 {
   "name": "prepend-header",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Use a JS module to define a header to prepend to one or more files.",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,9 @@
   "bin": {
     "prepend-header": "./index.js"
   },
-  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "dependencies": {
     "glob-fs": "^0.1.7",
     "minimist": "^1.2.5",
