@@ -12,9 +12,6 @@
   "bin": {
     "prepend-header": "./index.js"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "dependencies": {
     "glob-fs": "^0.1.7",
     "minimist": "^1.2.5",
