@@ -1,6 +1,6 @@
 {
   "name": "prepend-header",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Use a JS module to define a header to prepend to one or more files.",
   "main": "index.js",
   "scripts": {
