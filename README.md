@@ -46,3 +46,9 @@ module.exports = {
 1. create a header.config.js in your current working directory see above for format)
 2. `npx prepend-header src/**/*.js header.config.js`
 
+---
+### Releasing
+- npm version patch
+- npm publish
+- git push --tags
+- create GH release (pptional)
