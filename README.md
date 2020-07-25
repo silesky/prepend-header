@@ -37,7 +37,7 @@ module.exports = {
 3. In package.json do:
 ```json
 "scripts" {
-  "prepend-header: "prepend-header src/**/*.js header.config.js",
+  "prepend-header": "prepend-header src/**/*.js header.config.js",
 }
 ```
 4. `npm run prepend-header`
