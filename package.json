@@ -1,23 +1,19 @@
 {
   "name": "prepend-header",
-  "version": "1.0.7",
-  "description": "",
+  "version": "1.0.8",
+  "description": "Use a JS module to define a header to prepend to one or more files.",
   "main": "index.js",
   "scripts": {
     "test": "sh ./test.sh"
   },
-  "author": "",
+  "author": "@silesky",
   "license": "ISC",
-  "devDependencies": {
-    "eslint": "^4.19.1",
-    "jest": "^22.4.3"
-  },
   "bin": {
     "prepend-header": "./index.js"
   },
   "dependencies": {
     "glob-fs": "^0.1.7",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.5",
     "prepend-file": "^1.3.1"
   }
 }
