@@ -51,4 +51,4 @@ module.exports = {
 - npm version patch
 - npm publish
 - git push --tags
-- create GH release (pptional)
+- create GH release
