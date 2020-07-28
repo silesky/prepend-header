@@ -1,14 +1,14 @@
 # Prepend text to a file / group of files
 ###  Example(s):
-  - `prepend-header src-web/foo.js 'header.config.js'  (single file)`
-  - `prepend-header src-web/**/*.js 'header.config.js'  (all files matching glob)`.
+  - `prepend-header src/foo.js 'header.config.js'  (single file)`
+  - `prepend-header src/**/*.js 'header.config.js'  (all files matching glob)`.
 
 Successful Output should look like:
 ```
-[FILES from src-web/**/*]
-Prepended to src-web/after1.js
-Prepended to src-web/foo/after2.js
-Prepended to src-web/foo/after3.js
+[FILES from src/**/*]
+Prepended to src/after1.js
+Prepended to src/foo/after2.js
+Prepended to src/foo/after3.js
 ```
 
 ## Local Project:
@@ -42,7 +42,8 @@ module.exports = {
 ```
 4. `npm run prepend-header`
 ----
-## Run once with NPX
+
+## Run with npx
 1. create a header.config.js in your current working directory see above for format)
 2. `npx prepend-header src/**/*.js header.config.js`
 
