@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const prependFile = require('prepend-file');
+const prependFile = require('prepend-to-js-file');
 const glob = require('glob-fs')({ gitignore: false });
 const fs = require('fs');
 const path = require('path');

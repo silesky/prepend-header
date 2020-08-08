@@ -6,6 +6,8 @@ setup() {
   echo 'xxx' >'src-web/after.js'
   echo 'xxx' >'src-web/thing/thing2/after.scss'
   echo 'xxx' >'src-web/thing/thing2/after1.scss'
+  echo '#!/usr/bin/env node' >  'src-web/cli.js'
+  echo 'xxx'                 >> 'src-web/cli.js'
 }
 
 set -f # disable wildcard expansion
